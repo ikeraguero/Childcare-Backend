@@ -1,1 +1,1 @@
-web: nodemon build/src/index.ts && npx prisma generate
+worker: npm run start && npx prisma generate
