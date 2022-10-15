@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
-export async function addChild(childphoto: string, childname: string, childgender: string, childschool:string, childage: string, childaddress: string, childcity: string, childstate: string, childcpf:string, childdesc: string) {
+export async function addChild(childphoto: string, childname: string, childgender: string, childschool:string, childage: string, childaddress: string, childcity: string, childstate: string, childcpf:string, childdesc: string, childmaterialsreceived: string) {
     await prisma.$connect();
     const child = await prisma.child.create({
         data: {
@@ -14,13 +14,14 @@ export async function addChild(childphoto: string, childname: string, childgende
             city: childcity, //change to string
             state: childstate,
             cpf: childcpf,
-            description: childdesc
+            description: childdesc,
+            materialsreceived: childmaterialsreceived
         }
     });
     await prisma.$disconnect();
 };
 
-export async function updateChild(child_id: string, childphoto: string, childname: string, childgender: string, childschool:string, childage: string, childaddress: string, childcity: string, childstate: string, childcpf:string, childdesc: string) {
+export async function updateChild(child_id: string, childphoto: string, childname: string, childgender: string, childschool:string, childage: string, childaddress: string, childcity: string, childstate: string, childcpf:string, childdesc: string, childmaterialsreceived: string) {
     await prisma.$connect();
     const child = await prisma.child.update({
         where: {
@@ -36,7 +37,8 @@ export async function updateChild(child_id: string, childphoto: string, childnam
             city: childcity,
             state: childstate,
             cpf: childcpf,
-            description: childdesc
+            description: childdesc,
+            materialsreceived: childmaterialsreceived
         }
     });
     await prisma.$disconnect();
@@ -111,7 +113,7 @@ export async function uploadImage(child_id: string, image: string) {
     });
     await prisma.$disconnect();
 }
-export async function addDonation(donationdonatortype:string, donationdonator: string, donationemail: string, donationcpf: string, donationcnpj: string, donationcellphone: string, donationtype: string, donationvalue:string, donationmaterials: string) {
+export async function addDonation(donationdonatortype:string, donationdonator: string, donationemail: string, donationcpf: string, donationcnpj: string, donationcellphone: string, donationtype: string, donationvalue:string, donationmaterials: string, donationdonatedto: string, donationdonatedtoid: string) {
     await prisma.$connect();
     const donation = await prisma.donation.create({
         data: {
@@ -124,7 +126,19 @@ export async function addDonation(donationdonatortype:string, donationdonator: s
             type: donationtype,
             value: donationvalue,
             materials: donationmaterials,
+            donatedto: donationdonatedto,
+            donatedtoid: donationdonatedtoid
         }
     });
     await prisma.$disconnect();
 };
+
+export async function deleteDonation (donation_id: string) {
+    await prisma.$connect();
+    const donation = await prisma.donation.delete({
+        where: {
+            id: donation_id
+        }
+    });
+    await prisma.$disconnect();
+}
