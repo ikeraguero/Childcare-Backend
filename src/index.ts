@@ -91,7 +91,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 
-const port = process.env.PORT || 3000;
+
+
+var port = process.env.PORT || 5000;
+
 
 
 // GET
